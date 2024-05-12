@@ -95,6 +95,7 @@ class Utilities(commands.Cog):
         
         await interaction.response.send_message(embed=embed)
 
+    # Dice command
     @nextcord.slash_command(description="Rolls some dice")
     async def dice(self, interaction: Interaction, number: int, sides: int):
         avatar = self.bot.user.avatar.url
