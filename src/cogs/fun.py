@@ -120,6 +120,7 @@ class Fun(commands.Cog):
                 embed.set_image(url=url)
                 await interaction.response.send_message(embed=embed)
         
+    # APOD command
     @nextcord.slash_command(description="Replies with Nasa's astronomy picture of the day!")
     async def apod(self, interaction: Interaction):
         url = "https://api.nasa.gov/planetary/apod"
