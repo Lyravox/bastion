@@ -22,7 +22,7 @@ class Moderation(commands.Cog):
         self.color = 0xA8B5E0
 
     @nextcord.slash_command(description="Kick a user",
-                            guild_ids=[1239148261223174184])
+                            guild_ids=[1221875984672751646])
     async def kick(self,
                    interaction: nextcord.Interaction,
                    user: str,
@@ -67,7 +67,7 @@ class Moderation(commands.Cog):
         return await interaction.response.send_message(embed=embed)
 
     @nextcord.slash_command(description="Ban a user",
-                            guild_ids=[1239148261223174184])
+                            guild_ids=[1221875984672751646])
     async def ban(self,
                   interaction: nextcord.Interaction,
                   user: str,
