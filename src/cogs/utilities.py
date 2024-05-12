@@ -22,6 +22,7 @@ class Utilities(commands.Cog):
             description=f"""**Information**
             > * **Name:** Bastion
             > * **Owner:** <@1136085806147182713>
+            > * **Contributors:** <@1136085806147182713>, <@1020384453694062642>
             > * **ID:** {self.bot.user.id}
             > * **Github/Documentation:** https://github.com/Lyravox/bastion
             
