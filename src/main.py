@@ -16,6 +16,8 @@ bot = commands.Bot(
 )
 
 bot.load_extension('cogs.utilities')
+bot.load_extension('cogs.moderation')
+bot.load_extension('cogs.fun')
 
 @bot.event
 async def on_ready():
