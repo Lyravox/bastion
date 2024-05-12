@@ -16,7 +16,7 @@ class Utilities(commands.Cog):
         members = sum(guild.member_count for guild in self.bot.guilds)
         bot_user = await self.bot.fetch_user(self.bot.user.id)
         banner = bot_user.banner.url
-        
+        latency = int(self.bot.latency * 1000)
         
         embed = nextcord.Embed(
             title="About",
@@ -28,29 +28,13 @@ class Utilities(commands.Cog):
             > * **Github/Documentation:** https://github.com/Lyravox/bastion
             
             **Statistics**
+            > * **Latency:** {latency}ms
             > * **Server Count:** {len(self.bot.guilds)}
             > * **Member Count:** {members}
             """
             )
         embed.set_thumbnail(url=avatar)
         embed.set_image(url=banner)
-        
-        await interaction.response.send_message(embed=embed)
-        
-    # Ping command
-    @nextcord.slash_command(description="Replies with bot latency.")
-    async def ping(self, interaction: Interaction):
-        latency = int(self.bot.latency * 1000)
-        avatar = self.bot.user.avatar.url
-        
-        embed = nextcord.Embed(
-            title="Ping",
-            color=self.color,
-            description=f"""
-            **Bot Latency**
-            > * **Latency:** {latency}
-                               """)
-        embed.set_thumbnail(url=avatar)
         
         await interaction.response.send_message(embed=embed)
         
