@@ -13,10 +13,12 @@ class Fun(commands.Cog):
 
         result = random.choice(['Heads', 'Tails'])
         embed = nextcord.Embed(
-            title="Coin Flip Result",
+            title="Coin Flip",
             color=self.color,
-            description=f"The coin landed on: {result}"
-        )
+            description=f"""
+            **Results**
+            > * **Side:** {result}
+            """)
         embed.set_thumbnail(url=avatar)
 
         await interaction.response.send_message(embed=embed)
