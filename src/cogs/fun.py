@@ -5,6 +5,12 @@ import random
 import json
 import aiohttp
 import asyncio
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+apod = os.getenv("APOD")
 
 class Fun(commands.Cog):
     def __init__(self, bot):
@@ -45,7 +51,8 @@ class Fun(commands.Cog):
             embed.set_thumbnail(url=avatar)
             
             await interaction.response.send_message(embed=embed)
-            
+        
+    # Cat command    
     @nextcord.slash_command(description="Replies with a random cat image.")
     async def cat(self, interaction: Interaction):
         async with aiohttp.ClientSession() as session:
@@ -78,7 +85,8 @@ class Fun(commands.Cog):
                 )
                 embed.set_image(url=url)
                 await interaction.response.send_message(embed=embed)
-                
+             
+    # Dog command
     @nextcord.slash_command(description="Replies with a random dog image.")
     async def dog(self, interaction: Interaction):
         async with aiohttp.ClientSession() as session:
@@ -111,6 +119,42 @@ class Fun(commands.Cog):
                 )
                 embed.set_image(url=url)
                 await interaction.response.send_message(embed=embed)
+        
+    @nextcord.slash_command(description="Replies with Nasa's astronomy picture of the day!")
+    async def apod(self, interaction: Interaction):
+        url = "https://api.nasa.gov/planetary/apod"
+        async with aiohttp.ClientSession() as session:
+            params = {"api_key": apod}
+            async with session.get(url, params=params) as response:
+                if response.status == 200:
+                    data = await response.json()
+                    image = data.get("url")
+                    explanation = data.get("explanation")
+                    
+                    embed = nextcord.Embed(
+                        title="Astronomy Picture of the Day",
+                        color=self.color,
+                        description=f"""
+                        **APOD**
+                        > * **Description:** 
+                        > {explanation} 
+                        """)
+                    embed.set_image(url=image)
+                    
+                    await interaction.response.send_message(embed=embed)
+                else:
+                    error = await response.text()
+                    print(f"Failed to retrive APOD. Status: {response.status}, Error: {error}")
+                    
+                    embed = nextcord.Embed(
+                        title="Error",
+                        color=self.color,
+                        description=f"""
+                        **APOD Error**
+                        > * **Err:** Failed to retrieve Astronomy Picture of the Day
+                        """
+                    )
+                    await interaction.response.send_message(embed=embed)
         
 def setup(bot):
     bot.add_cog(Fun(bot))
