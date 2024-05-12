@@ -30,6 +30,8 @@ class Fun(commands.Cog):
         with open("src/data/topics.json") as f:
             topics = json.load(f)
             topic = random.choice(topics)
+            avatar = str(self.bot.user.avatar.url)
+
             
             embed = nextcord.Embed(
                 title="Topic",
@@ -38,6 +40,8 @@ class Fun(commands.Cog):
                 **Conversation Topic**
                 > * **Picked:** {topic} 
                 """)
+            embed.set_thumbnail(url=avatar)
+            
             await interaction.response.send_message(embed=embed)
 
 def setup(bot):
