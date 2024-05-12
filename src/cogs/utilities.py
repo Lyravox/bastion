@@ -38,5 +38,63 @@ class Utilities(commands.Cog):
         
         await interaction.response.send_message(embed=embed)
         
+    # Server information command
+    @nextcord.slash_command(description="Replies with server information.")
+    async def server(self, interaction: Interaction):
+        server = interaction.guild
+        name = server.name
+        owner = server.owner.mention
+        id = server.id
+        creation = int(server.created_at.timestamp())
+        timestamp = f"<t:{creation}:F>"
+        icon = server.icon.url
+        channels = len(server.channels)
+        vcs = len(server.voice_channels)
+        categories = len(server.categories)
+        roles = len(server.roles)
+        
+        embed = nextcord.Embed(
+            title="Server Information",
+            color=self.color,
+            description=f"""
+            **Information**
+            > * **Name:** {name}
+            > * **Owner:** {owner}
+            > * **ID:** {id}
+            > * **Creation:** {timestamp}
+            
+            **Statistics**
+            > * **Categories:** {categories}
+            > * **Channels:** {channels}
+            > * **VCs:** {vcs}
+            > * **Roles:** {roles}
+            """)
+        embed.set_thumbnail(url=icon)
+        
+        await interaction.response.send_message(embed=embed)
+        
+    @nextcord.slash_command(description="Replies with user information.")
+    async def user(self, interaction: Interaction, member: Member = None):
+        if member is None:
+            member = interaction.user
+        avatar = member.avatar.url
+        name = member.mention
+        id = member.id
+        creation = int(member.created_at.timestamp())
+        timestamp = f"<t:{creation}:F>"
+        
+        embed = nextcord.Embed(
+            title="User Information",
+            color=self.color,
+            description=f"""
+            **User**
+            > * **Name:** {name}
+            > * **ID:** {id}
+            > * **Creation:** {timestamp}
+            """)
+        embed.set_thumbnail(url=avatar)
+        
+        await interaction.response.send_message(embed=embed)
+
 def setup(bot):
     bot.add_cog(Utilities(bot))
