@@ -69,7 +69,8 @@ class Utilities(commands.Cog):
         embed.set_thumbnail(url=icon)
         
         await interaction.response.send_message(embed=embed)
-        
+    
+    # User command
     @nextcord.slash_command(description="Replies with user information.")
     async def user(self, interaction: Interaction, member: Member = None):
         if member is None:
@@ -93,7 +94,42 @@ class Utilities(commands.Cog):
         
         await interaction.response.send_message(embed=embed)
 
-    
-
+    @nextcord.slash_command(description="Rolls some dice")
+    async def dice(self, interaction: Interaction, number: int, sides: int):
+        avatar = self.bot.user.avatar.url
+        if sides < 2:
+            embed = nextcord.Embed(
+                title="Error",
+                color=self.color,
+                description="Number of sides must be 2 or more!"
+            )
+            embed.set_thumbnail(url=avatar)
+            await interaction.response.send_message(embed=embed)
+            return
+        if number > 50:
+            embed = nextcord.Embed(
+                title="Error",
+                color=self.color,
+                description="You can only roll up to 50 dice!")
+            embed.set_thumbnail(url=avatar)
+            await interaction.response.send_message(embed=embed)
+            return
+        rolls = [random.randint(1, sides) for _ in range(number)]
+        result = ', '.join(map(str, rolls))
+        total = sum(rolls)
+        
+        embed = nextcord.Embed(
+            title="Dice",
+            color=self.color,
+            description=f"""
+            **Roll**
+            > * **Rolled:** {number}d{sides}
+            > * **Result:** {result}
+            > * **Total:** {total}
+            """)
+        embed.set_thumbnail(url=avatar)
+        
+        await interaction.response.send_message(embed=embed)
+            
 def setup(bot):
     bot.add_cog(Utilities(bot))
