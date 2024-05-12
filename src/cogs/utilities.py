@@ -14,8 +14,6 @@ class Utilities(commands.Cog):
     async def about(self, interaction: Interaction):
         avatar = str(self.bot.user.avatar.url)
         members = sum(guild.member_count for guild in self.bot.guilds)
-        bot_user = await self.bot.fetch_user(self.bot.user.id)
-        banner = bot_user.banner.url
         latency = int(self.bot.latency * 1000)
         
         embed = nextcord.Embed(
@@ -34,7 +32,6 @@ class Utilities(commands.Cog):
             """
             )
         embed.set_thumbnail(url=avatar)
-        embed.set_image(url=banner)
         
         await interaction.response.send_message(embed=embed)
         
@@ -95,6 +92,8 @@ class Utilities(commands.Cog):
         embed.set_thumbnail(url=avatar)
         
         await interaction.response.send_message(embed=embed)
+
+    
 
 def setup(bot):
     bot.add_cog(Utilities(bot))
